@@ -1,4 +1,4 @@
-<h1 align="center">Bienvenido a InterLink</h1>
+<h1 align="center">Diseño de InterLink</h1>
 <div align="center">
   
 </div>
@@ -7,4 +7,10 @@
   <a href="empty" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
-</p>S
+</p>
+
+## Modelo de Dominio
+
+En este apartado se describe el modelo de dominio de la aplicación, que incluye las clases, los estados y las relaciones entre ellas.
+
+- [Clases](./modelo_de_dominio/clases/README.md)
