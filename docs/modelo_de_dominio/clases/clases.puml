@@ -1,3 +1,112 @@
-@startuml
-Bob -> Alice : hello
+@startuml Diagrama_de_Clases
+
+title Diagrama de Clases
+
+'!theme amiga
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+
+hide empty members
+
+entity User 
+{
+    Username
+    Password
+    UserProfile
+    Role
+}
+
+entity Company{
+    Name
+    UserAdministrators
+    CompanyProfile
+}
+
+entity CompanyProfile{
+    Website
+    SocialMediaLinks
+    Logo
+}
+
+abstract Profile{
+    Email
+    Address
+    PhoneNumber
+    Description
+}
+
+entity UserProfile{
+    Name
+    Surnames
+    Birthdate
+}
+
+entity Address{
+    Street
+    Number
+    Floor
+    PostalCode
+    City
+    Country
+}
+
+entity Role{
+    Name
+    Permissions
+}
+
+entity Permission{
+    Name
+    ModulesIds
+}
+
+entity Module{
+    Name
+    Description
+}
+
+entity InternShip{
+    CompanyName
+    CompanyId
+    Address
+    Description
+    InternShipDetails
+}
+
+entity InterShipDetails{
+    WorkingHours
+    Requirements
+    Salary
+    StartDate
+    EndDate
+}
+
+entity Application {
+    InternShipId
+    UserId
+    Status
+    ApplicationDate
+}
+
+User *- Role
+User *- UserProfile
+Role o- Permission
+Permission o- Module
+
+Company o-right- User
+Company *-down- CompanyProfile
+
+CompanyProfile --|> Profile
+UserProfile --|> Profile
+Profile *-- Address
+
+InternShip *-- InterShipDetails
+InternShip *-- Company
+InternShip *-- Address
+
+Application *-- InternShip
+Application *-up- User
+
+
+
 @enduml
