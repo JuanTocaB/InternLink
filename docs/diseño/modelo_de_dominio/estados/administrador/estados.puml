@@ -1,0 +1,22 @@
+@startuml estados
+
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+
+hide empty members
+
+title Estados del administrador
+
+[*] --> UsuarioAdministrador: se crea administrador
+
+state UsuarioAdministrador{
+
+    [*]-->Activo: necesita gestionar el sistema
+
+    Activo-->GestionandoUsuarios
+    Activo-->GestionandoEmpresas
+    Activo --> Inactivo
+    Inactivo --> Activo
+}
+
+@enduml
