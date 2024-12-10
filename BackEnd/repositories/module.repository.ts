@@ -1,9 +1,9 @@
-import User from '../models/user.model';
+import Module from '../models/module.model';
 
-const UserRepository = {
+const ModuleRepository = {
     async index() {
         try {
-            return await User.find();
+            return await Module.find();
         } catch (error) {
             throw new Error(error);
         }
@@ -11,7 +11,7 @@ const UserRepository = {
 
     async show(id: string) {
         try {
-            return await User.findById(id);
+            return await Module.findById(id);
         } catch (error) {
             throw new Error(error);
         }
@@ -19,7 +19,7 @@ const UserRepository = {
 
     async store(data: any) {
         try {
-            return await User.create(data);
+            return await Module.create(data);
         } catch (error) {
             throw new Error(error);
         }
@@ -27,7 +27,7 @@ const UserRepository = {
 
     async update(id: string, data: any) {
         try {
-            return await User.findByIdAndUpdate(id, data, { new: true });
+            return await Module.findByIdAndUpdate(id, data, { new: true });
         } catch (error) {
             throw new Error(error);
         }
@@ -35,11 +35,11 @@ const UserRepository = {
 
     async delete(id: string) {
         try {
-            return await User.findByIdAndDelete(id);
+            return await Module.findByIdAndDelete(id);
         } catch (error) {
             throw new Error(error);
         }
     }
 };
 
-export default UserRepository;
+export default ModuleRepository;
