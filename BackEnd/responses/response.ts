@@ -1,23 +1,20 @@
-const Response = {
-    success: (data: any, message: string) => {
-        return {
-            success: true,
-            status: 200,
-            data,
-            message
-        }
-        
-    },
+import type { Response } from "express";
 
-    error: (message: string, status: number) => {
-        return {
-            success: false,
-            status,
-            message
-        }
+const JsonResponse = {
+  success: (response: Response, data: any, message: string) => {
+    return response.status(200).json({
+      success: true,
+      message,
+      data,
+    });
+  },
 
-    }
+  error: (response: Response, message: string, status: number) => {
+    return response.status(status).json({
+      success: false,
+      message,
+    });
+  },
+};
 
-}
-
-export default Response;
+export default JsonResponse;
