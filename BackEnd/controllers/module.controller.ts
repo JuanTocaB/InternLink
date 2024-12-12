@@ -1,8 +1,9 @@
 import Repository from "../repositories/module.repository";
 import JsonResponse from "../responses/response";
+import IController from "./interface.controller";
 import type { Request, Response } from "express";
 
-const ModuleController = {
+const ModuleController: IController = {
   async index(response: Response): Promise<Response> {
     try {
       const modules = await Repository.index();
@@ -59,10 +60,10 @@ const ModuleController = {
     }
   },
 
-  async remove(request: Request, response: Response): Promise<Response> {
+  async delete(request: Request, response: Response): Promise<Response> {
     try {
       const id: string = request.params.id;
-      const module = await Repository.delete(id);
+      const module = await Repository.remove(id);
       return JsonResponse.success(
         response,
         module,

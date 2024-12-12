@@ -3,6 +3,6 @@ import ModuleRouter from "./module.routes";
 
 const router = Router();
 
-router.use("/modules", ModuleRouter);
+router.use("/module", ModuleRouter);
 
 export default router;

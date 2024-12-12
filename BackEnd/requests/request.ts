@@ -1,12 +1,15 @@
 import type { ZodSchema } from "zod";
+import type { Request, Response } from "express";
+import JsonResponse from "../responses/response";
 
 const validateRequest =
-  (schema: ZodSchema) => async (req: any, res: any, next: any) => {
+  (schema: ZodSchema) =>
+  async (request: Request, response: Response, next: any) => {
     try {
-      await schema.parseAsync(req.body);
+      await schema.parseAsync(request.body);
       next();
     } catch (error: any) {
-      res.status(400).json({ message: error.errors });
+      JsonResponse.requestValidationError(response, error.errors, 500);
     }
   };
 

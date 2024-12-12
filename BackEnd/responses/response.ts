@@ -15,6 +15,13 @@ const JsonResponse = {
       message,
     });
   },
+
+  requestValidationError: (response: Response, error: any, status: number) => {
+    return response.status(status).json({
+      success: false,
+      error,
+    });
+  }
 };
 
 export default JsonResponse;
