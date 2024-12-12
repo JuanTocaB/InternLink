@@ -1,11 +1,11 @@
-import Role from "../models/role.model";
+import Permission from "../models/permission.model";
 import IRepository from "./interface.repository";
 import type { Document } from "mongoose";
 
-const RoleRepository: IRepository = {
+const PermissionRepository: IRepository = {
   async index(): Promise<Document[]> {
     try {
-      return await Role.find();
+      return await Permission.find();
     } catch (error: any) {
       throw new Error(error);
     }
@@ -13,13 +13,13 @@ const RoleRepository: IRepository = {
 
   async show(id: string): Promise<Document> {
     try {
-      const role = await Role.findById(id);
+      const permission = await Permission.findById(id);
 
-      if (!role) {
-        throw new Error("Role not found");
+      if (!permission) {
+        throw new Error("Permission not found");
       }
 
-      return role;
+      return permission;
     } catch (error: any) {
       throw new Error(error);
     }
@@ -27,7 +27,7 @@ const RoleRepository: IRepository = {
 
   async store(data: JSON): Promise<Document> {
     try {
-      return await Role.create(data);
+      return await Permission.create(data);
     } catch (error: any) {
       throw new Error(error);
     }
@@ -35,13 +35,15 @@ const RoleRepository: IRepository = {
 
   async update(id: string, data: JSON): Promise<Document> {
     try {
-      const role = await Role.findByIdAndUpdate(id, data, { new: true });
+      const permission = await Permission.findByIdAndUpdate(id, data, {
+        new: true,
+      });
 
-      if (!role) {
-        throw new Error("Role not found");
+      if (!permission) {
+        throw new Error("Permission not found");
       }
 
-      return role;
+      return permission;
     } catch (error: any) {
       throw new Error(error);
     }
@@ -49,17 +51,17 @@ const RoleRepository: IRepository = {
 
   async remove(id: string): Promise<Document> {
     try {
-      const role = await Role.findByIdAndDelete(id);
+      const permission = await Permission.findByIdAndDelete(id);
 
-      if (!role) {
-        throw new Error("Role not found");
+      if (!permission) {
+        throw new Error("Permission not found");
       }
 
-      return role;
+      return permission;
     } catch (error: any) {
       throw new Error(error);
     }
   },
 };
 
-export default RoleRepository;
+export default PermissionRepository;

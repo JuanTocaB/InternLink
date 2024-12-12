@@ -1,6 +1,5 @@
 import Module from "../models/module.model";
 import IRepository from "./interface.repository";
-import mongoose from "mongoose";
 import type { Document } from "mongoose";
 
 const ModuleRepository: IRepository = {

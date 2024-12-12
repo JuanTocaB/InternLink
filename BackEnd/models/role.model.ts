@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
-import Permission from "./permission.model";
+import IRole from "./interfaces/role.interface";
 
-const roleSchema: mongoose.Schema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
+const roleSchema: mongoose.Schema = new mongoose.Schema<IRole>({
+  name: {
+    type: String,
+    required: true,
+  },
+  permissions: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Permission",
+      required: true,
     },
-    permissions: [
-        Permission.schema, 
-        { required: true }
-    ]
+  ],
 });
 
 const Role = mongoose.model("Role", roleSchema);
