@@ -6,4 +6,14 @@ interface IRepository {
   remove(id: string): Promise<any>;
 }
 
+interface IApplicationRepository {
+  index(): Promise<any>;
+  show(id: string): Promise<any>;
+  store(data: JSON): Promise<any>;
+  update(id: string, data: JSON): Promise<any>;
+  remove(id: string): Promise<any>;
+}
+
 export default IRepository;
+
+export { IApplicationRepository };
