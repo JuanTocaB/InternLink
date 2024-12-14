@@ -1,12 +1,16 @@
 import Repository from "../repositories/module.repository";
+import ModuleResource from "../resource/module.resource";
+import ModuleCollection from "../collections/module.collection";
 import JsonResponse from "../responses/response";
 import IController from "./interface.controller";
 import type { Request, Response } from "express";
 
 const ModuleController: IController = {
-  async index(response: Response): Promise<Response> {
+  async index(request: Request, response: Response): Promise<Response> {
     try {
-      const modules = await Repository.index();
+      const pagination = request.body.pagination;
+      const filters = request.body.filters;
+      const modules = await ModuleCollection(pagination, filters);
       return JsonResponse.success(
         response,
         modules,
@@ -20,7 +24,7 @@ const ModuleController: IController = {
   async get(request: Request, response: Response): Promise<Response> {
     try {
       const id: string = request.params.id;
-      const module = await Repository.show(id);
+      const module = await ModuleResource(id);
       return JsonResponse.success(
         response,
         module,
@@ -35,6 +39,7 @@ const ModuleController: IController = {
     try {
       const data = request.body;
       const module = await Repository.store(data);
+      const id: string = module["_id"].toString() as string;
       return JsonResponse.success(
         response,
         module,

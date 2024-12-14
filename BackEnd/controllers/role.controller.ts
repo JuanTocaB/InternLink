@@ -1,12 +1,16 @@
 import Repository from "../repositories/role.repository";
+import RoleResource from "../resource/role.resource";
+import RoleCollection from "../collections/role.collection";
 import JsonResponse from "../responses/response";
 import IController from "./interface.controller";
 import type { Request, Response } from "express";
 
 const RoleController: IController = {
-  async index(response: Response): Promise<Response> {
+  async index(request: Request, response: Response): Promise<Response> {
     try {
-      const roles = await Repository.index();
+      const pagination = request.body.pagination;
+      const filters = request.body.filters;
+      const roles = await RoleCollection(pagination, filters);
       return JsonResponse.success(
         response,
         roles,
@@ -20,7 +24,7 @@ const RoleController: IController = {
   async get(request: Request, response: Response): Promise<Response> {
     try {
       const id: string = request.params.id;
-      const role = await Repository.show(id);
+      const role = await RoleResource(id);
       return JsonResponse.success(
         response,
         role,
@@ -55,8 +59,8 @@ const RoleController: IController = {
   async delete(request: Request, response: Response): Promise<Response> {
     try {
       const id: string = request.params.id;
-      await Repository.remove(id);
-      return JsonResponse.success(response, {}, "Role deleted successfully");
+      const role = await Repository.remove(id);
+      return JsonResponse.success(response, role, "Role deleted successfully");
     } catch (error: any) {
       return JsonResponse.error(response, error.message, 500);
     }

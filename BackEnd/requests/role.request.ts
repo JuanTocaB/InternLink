@@ -1,13 +1,21 @@
-import z from "zod";
+import zod from "zod";
+import { nameRules, permissionsRules } from "./rules/role.rules";
+import { filters } from "./filters/filters";
+import { paginateRules } from "./rules/paginate.rules";
 
-const createRoleSchema = z.object({
-  name: z.string().min(3).max(255),
-  permissions: z.array(z.string()),
+const indexRoleSchema = zod.object({
+  pagination: paginateRules,
+  filters: filters,
 });
 
-const updateRoleSchema = z.object({
-  name: z.string().min(3).max(255).optional(),
-  permissions: z.array(z.string()).optional(),
+const createRoleSchema = zod.object({
+  name: nameRules,
+  permissions: permissionsRules,
 });
 
-export { createRoleSchema, updateRoleSchema };
+const updateRoleSchema = zod.object({
+  name: nameRules.optional(),
+  permissions: permissionsRules.optional(),
+});
+
+export { createRoleSchema, updateRoleSchema, indexRoleSchema };

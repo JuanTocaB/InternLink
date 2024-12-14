@@ -1,17 +1,26 @@
 import Module from "../models/module.model";
 import IRepository from "./interface.repository";
-import type { Document } from "mongoose";
+import { IndexModuleFields } from "./fields.search";
+import Search from "./search";
+import paginate from "../collections/paginate";
 
 const ModuleRepository: IRepository = {
-  async index(): Promise<Document[]> {
+  async index(pagination: any, filters: any) {
     try {
-      return await Module.find();
+      const query: Record<string, any> = {};
+      const searchFields = IndexModuleFields;
+
+      const queryFilters = await Search.byTerm(query, filters, searchFields);
+      const resultsQuery = Module.find(queryFilters);
+      const resultsPaginated = paginate(resultsQuery, pagination);
+
+      return resultsPaginated.exec();
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   },
 
-  async show(id: string): Promise<Document> {
+  async show(id: string) {
     try {
       const module = await Module.findById(id);
 
@@ -21,19 +30,19 @@ const ModuleRepository: IRepository = {
 
       return module;
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   },
 
-  async store(data: JSON): Promise<Document> {
+  async store(data: JSON) {
     try {
       return await Module.create(data);
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   },
 
-  async update(id: string, data: JSON): Promise<Document> {
+  async update(id: string, data: JSON) {
     try {
       const module = await Module.findByIdAndUpdate(id, data, { new: true });
 
@@ -43,11 +52,11 @@ const ModuleRepository: IRepository = {
 
       return module;
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   },
 
-  async remove(id: string): Promise<Document> {
+  async remove(id: string) {
     try {
       const module = await Module.findByIdAndDelete(id);
 
@@ -57,7 +66,7 @@ const ModuleRepository: IRepository = {
 
       return module;
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   },
 };

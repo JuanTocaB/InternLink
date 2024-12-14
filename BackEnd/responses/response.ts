@@ -21,7 +21,7 @@ const JsonResponse = {
       success: false,
       error,
     });
-  }
+  },
 };
 
 export default JsonResponse;

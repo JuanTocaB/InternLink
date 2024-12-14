@@ -1,13 +1,21 @@
-import z from "zod";
+import zod from "zod";
+import { nameRules, descriptionRules } from "./rules/module.rules";
+import { paginateRules } from "./rules/paginate.rules";
+import { filters } from "./filters/filters";
 
-const createModuleSchema = z.object({
-  name: z.string().min(3).max(255),
-  description: z.string(),
+const indexModuleSchema = zod.object({
+  pagination: paginateRules,
+  filters: filters,
 });
 
-const updateModuleSchema = z.object({
-  name: z.string().min(3).max(255).optional(),
-  description: z.string().optional(),
+const createModuleSchema = zod.object({
+  name: nameRules,
+  description: descriptionRules,
 });
 
-export { createModuleSchema, updateModuleSchema };
+const updateModuleSchema = zod.object({
+  name: nameRules.optional(),
+  description: descriptionRules.optional(),
+});
+
+export { createModuleSchema, updateModuleSchema, indexModuleSchema };

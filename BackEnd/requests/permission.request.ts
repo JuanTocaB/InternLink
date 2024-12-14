@@ -1,13 +1,25 @@
-import z from "zod";
+import zod from "zod";
+import { nameRules, modulesRules } from "./rules/permission.rules";
+import { paginateRules } from "./rules/paginate.rules";
+import { filters } from "./filters/filters";
 
-const createPermissionSchema = z.object({
-  name: z.string().min(3).max(255),
-  modules: z.array(z.string()),
+const indexPermissionSchema = zod.object({
+  pagination: paginateRules,
+  filters: filters,
 });
 
-const updatePermissionSchema = z.object({
-  name: z.string().min(3).max(255).optional(),
-  modules: z.array(z.string()).optional(),
+const createPermissionSchema = zod.object({
+  name: nameRules,
+  modules: modulesRules,
 });
 
-export { createPermissionSchema, updatePermissionSchema };
+const updatePermissionSchema = zod.object({
+  name: nameRules.optional(),
+  modules: modulesRules.optional(),
+});
+
+export {
+  createPermissionSchema,
+  updatePermissionSchema,
+  indexPermissionSchema,
+};

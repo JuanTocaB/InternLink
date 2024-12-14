@@ -1,6 +1,7 @@
 import Router from "express";
 import validateRequest from "../requests/request";
 import {
+  indexModuleSchema,
   createModuleSchema,
   updateModuleSchema,
 } from "../requests/module.request";
@@ -9,9 +10,13 @@ import type { NextFunction, Request, Response } from "express";
 
 const ModuleRouter = Router();
 
-ModuleRouter.get("/", (request: Request, response: Response, next) => {
-  ModuleController.index(response).catch(next);
-});
+ModuleRouter.get(
+  "/",
+  validateRequest(indexModuleSchema),
+  (request: Request, response: Response, next: NextFunction) => {
+    ModuleController.index(request, response).catch(next);
+  },
+);
 
 ModuleRouter.get("/:id", (request: Request, response: Response, next) => {
   ModuleController.get(request, response).catch(next);

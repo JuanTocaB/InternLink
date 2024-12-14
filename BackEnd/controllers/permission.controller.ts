@@ -1,12 +1,16 @@
 import Repository from "../repositories/permission.repository";
+import PermissionResource from "../resource/permission.resource";
+import PermissionCollection from "../collections/permission.collection";
 import JsonResponse from "../responses/response";
 import IController from "./interface.controller";
 import type { Request, Response } from "express";
 
 const PermissionController: IController = {
-  async index(response: Response): Promise<Response> {
+  async index(request: Request, response: Response): Promise<Response> {
     try {
-      const permissions = await Repository.index();
+      const pagination = request.body.pagination;
+      const filters = request.body.filters;
+      const permissions = await PermissionCollection(pagination, filters);
       return JsonResponse.success(
         response,
         permissions,
@@ -20,7 +24,7 @@ const PermissionController: IController = {
   async get(request: Request, response: Response): Promise<Response> {
     try {
       const id: string = request.params.id;
-      const permission = await Repository.show(id);
+      const permission = await PermissionResource(id);
       return JsonResponse.success(
         response,
         permission,

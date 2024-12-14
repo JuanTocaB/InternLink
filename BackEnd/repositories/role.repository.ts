@@ -1,17 +1,26 @@
 import Role from "../models/role.model";
 import IRepository from "./interface.repository";
-import type { Document } from "mongoose";
+import { IndexRoleFields } from "./fields.search";
+import Search from "./search";
+import paginate from "../collections/paginate";
 
 const RoleRepository: IRepository = {
-  async index(): Promise<Document[]> {
+  async index(pagination: any, filters: any) {
     try {
-      return await Role.find();
+      const query: Record<string, any> = {};
+      const searchFields = IndexRoleFields;
+
+      const queryFilters = await Search.byTerm(query, filters, searchFields);
+      const resultsQuery = Role.find(queryFilters);
+      const resultsPaginated = paginate(resultsQuery, pagination);
+
+      return resultsPaginated.exec();
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   },
 
-  async show(id: string): Promise<Document> {
+  async show(id: string) {
     try {
       const role = await Role.findById(id);
 
@@ -21,19 +30,19 @@ const RoleRepository: IRepository = {
 
       return role;
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   },
 
-  async store(data: JSON): Promise<Document> {
+  async store(data: JSON) {
     try {
       return await Role.create(data);
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   },
 
-  async update(id: string, data: JSON): Promise<Document> {
+  async update(id: string, data: JSON) {
     try {
       const role = await Role.findByIdAndUpdate(id, data, { new: true });
 
@@ -43,11 +52,11 @@ const RoleRepository: IRepository = {
 
       return role;
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   },
 
-  async remove(id: string): Promise<Document> {
+  async remove(id: string) {
     try {
       const role = await Role.findByIdAndDelete(id);
 
@@ -57,7 +66,7 @@ const RoleRepository: IRepository = {
 
       return role;
     } catch (error: any) {
-      throw new Error(error);
+      throw error;
     }
   },
 };

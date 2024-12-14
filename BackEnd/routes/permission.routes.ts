@@ -1,6 +1,7 @@
 import Router from "express";
 import validateRequest from "../requests/request";
 import {
+  indexPermissionSchema,
   createPermissionSchema,
   updatePermissionSchema,
 } from "../requests/permission.request";
@@ -9,9 +10,13 @@ import type { NextFunction, Request, Response } from "express";
 
 const PermissionRouter = Router();
 
-PermissionRouter.get("/", (request: Request, response: Response, next) => {
-  PermissionController.index(response).catch(next);
-});
+PermissionRouter.get(
+  "/",
+  validateRequest(indexPermissionSchema),
+  (request: Request, response: Response, next) => {
+    PermissionController.index(request, response).catch(next);
+  },
+);
 
 PermissionRouter.get("/:id", (request: Request, response: Response, next) => {
   PermissionController.get(request, response).catch(next);

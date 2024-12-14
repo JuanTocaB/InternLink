@@ -1,11 +1,9 @@
-import { Document } from "mongoose";
-
 interface IRepository {
-  index(): Promise<Document[]>;
-  show(id: string): Promise<Document>;
-  store(data: JSON): Promise<Document>;
-  update(id: string, data: JSON): Promise<Document>;
-  remove(id: string): Promise<Document>;
+  index(pagination: any, filters: any): Promise<any>;
+  show(id: string): Promise<any>;
+  store(data: JSON): Promise<any>;
+  update(id: string, data: JSON): Promise<any>;
+  remove(id: string): Promise<any>;
 }
 
 export default IRepository;

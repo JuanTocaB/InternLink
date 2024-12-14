@@ -1,14 +1,22 @@
 import Router from "express";
 import validateRequest from "../requests/request";
-import { createRoleSchema, updateRoleSchema } from "../requests/role.request";
+import {
+  indexRoleSchema,
+  createRoleSchema,
+  updateRoleSchema,
+} from "../requests/role.request";
 import RoleController from "../controllers/role.controller";
 import type { NextFunction, Request, Response } from "express";
 
 const RoleRouter = Router();
 
-RoleRouter.get("/", (request: Request, response: Response, next) => {
-  RoleController.index(response).catch(next);
-});
+RoleRouter.get(
+  "/",
+  validateRequest(indexRoleSchema),
+  (request: Request, response: Response, next) => {
+    RoleController.index(request, response).catch(next);
+  },
+);
 
 RoleRouter.get("/:id", (request: Request, response: Response, next) => {
   RoleController.get(request, response).catch(next);
