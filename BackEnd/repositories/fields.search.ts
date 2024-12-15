@@ -9,6 +9,7 @@ const IndexInternshipFields = [
   "requirements",
 ];
 const IndexApplicationFields = ["status"];
+const ShowTokenFields = ["token"];
 
 export {
   IndexModuleFields,
@@ -17,4 +18,5 @@ export {
   IndexUserFields,
   IndexInternshipFields,
   IndexApplicationFields,
+  ShowTokenFields,
 };

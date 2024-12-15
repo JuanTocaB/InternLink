@@ -39,7 +39,6 @@ const UserController: IController = {
   async create(request: Request, response: Response): Promise<Response> {
     try {
       const data = request.body;
-      data.password = await bcrypt.hash(data.password, 10);
       const user = await Repository.store(data);
 
       return JsonResponse.success(response, user, "User created successfully");

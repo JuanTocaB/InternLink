@@ -4,13 +4,19 @@ import ApplicationCollection from "../collections/application.collection";
 import JsonResponse from "../responses/response";
 import IController from "./interface.controller";
 import type { Request, Response } from "express";
+import IUserDocument from "../models/interfaces/user.interface";
 
 const ApplicationController: IController = {
   async index(request: Request, response: Response): Promise<Response> {
     try {
       const pagination = request.body.pagination;
+      const user = (request as any).user;
       const filters = request.body.filters;
-      const applications = await ApplicationCollection(pagination, filters);
+      const applications = await ApplicationCollection(
+        pagination,
+        filters,
+        user,
+      );
       return JsonResponse.success(
         response,
         applications,
@@ -24,7 +30,8 @@ const ApplicationController: IController = {
   async get(request: Request, response: Response): Promise<Response> {
     try {
       const id: string = request.params.id;
-      const application = await ApplicationResource(id);
+      const user = (request as any).user;
+      const application = await ApplicationResource(id, user);
       return JsonResponse.success(
         response,
         application,
@@ -67,7 +74,10 @@ const ApplicationController: IController = {
   async delete(request: Request, response: Response): Promise<Response> {
     try {
       const id: string = request.params.id;
+      const user = (request as any).user;
       const application = await Repository.remove(id);
+      if (application.userId !== user.id)
+        return JsonResponse.error(response, "Unauthorized", 401);
       return JsonResponse.success(
         response,
         application,
