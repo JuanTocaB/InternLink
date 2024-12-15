@@ -2,8 +2,13 @@ import { IApplicationDocument } from "../models/interfaces/application.interface
 import { IInternshipDocument } from "../models/interfaces/internship.interface";
 import ApplicationRepository from "../repositories/application.repository";
 import InternshipRepository from "../repositories/internship.repository";
+import IUser from "../models/interfaces/user.interface";
 
-const ApplicationCollection = async (pagination: any, filters: any) => {
+const ApplicationCollection = async (
+  pagination: any,
+  filters: any,
+  user: any,
+) => {
   var applications: IApplicationDocument[] = (await ApplicationRepository.index(
     pagination,
     filters,
@@ -35,7 +40,10 @@ const ApplicationCollection = async (pagination: any, filters: any) => {
   const result = [];
   for (const application of applications) {
     for (const internship of internships) {
-      if (application.internshipId === internship.id) {
+      if (
+        application.internshipId === internship.id &&
+        application.userId === user.id
+      ) {
         result.push({
           id: application.id,
           internshipId: application.internshipId,
