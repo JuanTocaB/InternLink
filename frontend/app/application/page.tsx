@@ -25,7 +25,7 @@ export default function Dashboard() {
     indexApplications().then((response) => {
       setTableData(response.data.data);
       const user = JSON.parse(localStorage.getItem("user") || "");
-      if (user.roles[0].name === "Admin") {
+      if (user.roles[0].name === "Administrator") {
         setColumns(applicationAdminColumns);
       } else if (user.roles[0].name === "User") {
         setColumns(applicationUserColumns);
@@ -66,9 +66,7 @@ export default function Dashboard() {
       </div>
       <div className="flex flex-col">
         <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-          <div className="w-full flex-1">
-            <AdminSearch />
-          </div>
+          <div className="w-full flex-1"></div>
           <ModeToggle />
           <UserDropdown />
         </header>

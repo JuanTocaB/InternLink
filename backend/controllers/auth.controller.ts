@@ -62,7 +62,7 @@ const AuthController = {
     const newUser: IUser = {
       username: username,
       email: email,
-      password: password,
+      password: await hashPassword(password),
       roles: [userRoleId],
       createdAt: new Date(),
       updatedAt: new Date(),
