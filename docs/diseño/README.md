@@ -14,3 +14,8 @@
 En este apartado se describe el modelo de dominio de la aplicación, que incluye las clases, los estados y las relaciones entre ellas.
 
 - [Clases](./modelo_de_dominio/clases/README.md)
+
+
+## Arquitectura
+
+- [Arquitectura](./arquitectura/README.md)

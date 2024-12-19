@@ -12,42 +12,7 @@ entity User
 {
     Username
     Password
-    UserProfile
-    Role
-}
-
-entity Company{
-    Name
-    UserAdministrators
-    CompanyProfile
-}
-
-entity CompanyProfile{
-    Website
-    SocialMediaLinks
-    Logo
-}
-
-abstract Profile{
-    Email
-    Address
-    PhoneNumber
-    Description
-}
-
-entity UserProfile{
-    Name
-    Surnames
-    Birthdate
-}
-
-entity Address{
-    Street
-    Number
-    Floor
-    PostalCode
-    City
-    Country
+    Roles
 }
 
 entity Role{
@@ -67,13 +32,10 @@ entity Module{
 
 entity InternShip{
     CompanyName
+    userId
     CompanyId
     Address
     Description
-    InternShipDetails
-}
-
-entity InterShipDetails{
     WorkingHours
     Requirements
     Salary
@@ -85,28 +47,18 @@ entity Application {
     InternShipId
     UserId
     Status
-    ApplicationDate
 }
 
-User *- Role
-User *- UserProfile
+User o- Role
 Role o- Permission
 Permission o- Module
-
-Company o-right- User
-Company *-down- CompanyProfile
-
-CompanyProfile --|> Profile
-UserProfile --|> Profile
-Profile *-- Address
-
-InternShip *-- InterShipDetails
-InternShip *-- Company
-InternShip *-- Address
 
 Application *-- InternShip
 Application *-up- User
 
+InternShip *-up- User
+
 
 
 @enduml
+

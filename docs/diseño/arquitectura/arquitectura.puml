@@ -1,0 +1,53 @@
+@startuml
+package "Backend Architecture" {
+
+  package "Collections" {
+  }
+
+  package "Controllers" {
+  }
+
+  package "Database" {
+  }
+
+  package "Middlewares" {
+  }
+
+  package "Models" {
+
+  }
+
+  package "Repositories" {
+  }
+
+  package "Requests" {
+
+  }
+
+  package "Resources" {
+  }
+
+  package "Responses" {
+  }
+
+  package "Routes" {
+  }
+
+}
+
+"Routes" --> "Requests" : Validates request data
+"Requests" --> "Middlewares" : Validates action permissions
+"Middlewares" --> "Controllers" : Forwards if allowed
+"Controllers" --> "Collections" : Accesses data if indexing
+"Controllers" --> "Resources" : Accesses resources for specific actions
+"Collections" --> "Repositories" : Fetches data
+"Collections" --> "Controllers": Returns formated data
+"Resources" --> "Controllers": Returns formatted data
+"Repositories" --> "Models": Uses the models for executing actions
+"Repositories" --> "Collections" : Returns data
+"Repositories" --> "Resources": Returns data
+"Resources" --> "Repositories" : Fetches or modifies data
+"Controllers" --> "Responses" : return the final response
+"Models" --> "Database": executes the actions
+
+@enduml
